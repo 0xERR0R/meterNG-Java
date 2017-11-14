@@ -9,8 +9,11 @@
 * Import and Export to/from a CSV file
 * Optional: periodical mail with CSV file as backup (Mail configuration necessary, see below)
 * Optional: periodical reminder mail if X days elapsed since last reading date (Mail configuration necessary, see below)
-<img src="screenshot2.png" alt="Chart view" style="height: 200px;"/>
-<img src="screenshot3.png" alt="New record page" style="height: 200px;"/>
+
+Chart view                                                 |  New record view
+:-------------------------------------------------------   |    ----------------------:
+<img src="screenshot2.png" alt="Chart view" width="600"/>  |  <img src="screenshot3.png" alt="New record page" width="135"/>
+
 
 ## Configuration
 #### Application configuraion:
@@ -32,7 +35,7 @@ To send mails, meterNG needs a SMTP server with valid account. For configuration
 
 #### Example configuration (application.properties)
 ```
-config.allMeters = Electricity(kWh), Gas(m�)
+config.allMeters = Electricity(kWh), Gas(m³)
 notificationMail.enabled = true
 notificationMail.recipient = me@example.com
 notificationMail.url = pi.local:8080
