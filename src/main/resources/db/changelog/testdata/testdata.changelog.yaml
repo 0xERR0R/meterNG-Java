@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+       id: testData
+       author: dh
+       changes:
+       - sqlFile:
+           dbms: h2, mysql
+           encoding: utf8
+           endDelimiter: ;
+           path: testdata.sql
+           relativeToChangelogFile: true
+           splitStatements: true
+           stripComments: true

@@ -1,0 +1,97 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.8.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+  id "org.sonarqube" version "2.6"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: "jacoco"
+
+jar {
+	baseName = 'meterNG'
+	version = '0.9-SNAPSHOT'
+	archiveName = project.name + '.jar'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+repositories {
+	mavenCentral()
+}
+
+configurations {
+    dev
+}
+
+springBoot {
+    executable = true
+}
+
+task copySupportFiles(type: Copy){
+    from 'src/main/resources/buildsupport'
+    into 'build/libs'
+    include '**/.conf'
+		rename { String fileName ->
+        fileName.replace('.conf', project.name+'.conf')}
+
+
+}
+
+jacoco {
+    reportsDir = file("build/tmp/jacoco.exec")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+
+sonarqube {
+    properties {
+        property "sonar.exclusions", "**/*.js, **/jparsec/**"
+         property "sonar.sourceEncoding", "UTF-8"
+    }
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.liquibase:liquibase-core')
+	compile('com.google.visualization:visualization-datasource:1.1.1')
+	compile('org.thymeleaf.extras:thymeleaf-extras-java8time:2.1.0.RELEASE')
+	runtime('com.h2database:h2')
+	runtime('mysql:mysql-connector-java')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('net.sourceforge.htmlunit:htmlunit:2.23')
+	testCompile('com.icegreen:greenmail:1.5.2')
+	dev('org.springframework.boot:spring-boot-devtools')
+}
+
+bootRun {
+	environment "spring.profiles.active", "dev"
+    // Use Spring Boot DevTool only when we run Gradle bootRun task
+    classpath = sourceSets.main.runtimeClasspath + configurations.dev
+}
+
+test.finalizedBy(jacocoTestReport)
+build.finalizedBy(copySupportFiles)

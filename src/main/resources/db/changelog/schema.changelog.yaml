@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-initialDbSchema
+      author: dh
+      changes:
+        - createTable:
+            tableName: reading
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: meter_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: decimal(19,2)
+                  constraints:
+                    nullable: false

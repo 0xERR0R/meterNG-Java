@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en" th:replace="fragments/htmlHeader :: htmlHeader (title=#{page.header.chart})">
+</head>
+<body>
+<script type="text/javascript" src="/js/jsapi.js"></script>
+<script th:inline="javascript">
+	//Load the Visualization API and the ready-made Google table visualization
+	google.load('visualization', '1', {
+		'packages' : [ 'corechart' ]
+	});
+
+	// Set a callback to run when the API is loaded.
+	google.setOnLoadCallback(init);
+
+	// Send the query to the data source.
+	function init() {
+
+		// Specify the data source URL.
+		var query = new google.visualization.Query([[${dataUrl}]]);
+
+		// Send the query with a callback function.
+		query.send(handleQueryResponse);
+	}
+
+	// Handle the query response.
+	function handleQueryResponse(response) {
+		if (response.isError()) {
+			alert('Error in query: ' + response.getMessage() + ' '
+					+ response.getDetailedMessage());
+			return;
+		}
+
+		// Draw the visualization.
+		var data = response.getDataTable();
+
+		var wrapper = new google.visualization.ChartWrapper({
+			chartType : data.getTableProperty('chartType'),
+			dataTable : data,
+			options : {
+				'title' : data.getTableProperty('chartTitle'),
+				pointSize : 5,
+				vAxis : {
+					format : '######.# ' + data.getTableProperty('meterUnit'),
+					minValue : data.getTableProperty('vAxis.minValue'),
+					viewWindow : {
+						min : data.getTableProperty('vAxis.minValue')
+					}
+				},
+				hAxis : {
+					title : data.getTableProperty('hAxis.title')
+				}
+			},
+
+			containerId : 'chart_div'
+		});
+		wrapper.draw();
+
+	}
+</script>
+
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<ol class="breadcrumb">
+  <li th:each="chartType : ${chartTypes}" th:class="${chartType} == ${activeChart} ? 'active' : ''">
+  	<span th:if="${chartType} == ${activeChart}" th:text="#{'chartType.' + ${chartType} + '.label'}"></span>
+  	<a th:unless="${chartType} == ${activeChart}" href="#" th:href="@{/meterReadings/{meterName}/chart/{chartType}(meterName=${meterName},chartType=${chartType})}" th:text="#{'chartType.' + ${chartType} + '.label'}">chartType</a>
+  </li>
+</ol>
+<div id="chart_div" style="width: 100%; height: 400px;"></div>
+</body>
+</html>
