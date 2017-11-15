@@ -1,4 +1,4 @@
-# meterNG [![Build Status](https://travis-ci.org/0xERR0R/meterNG.svg?branch=master)](https://travis-ci.org/0xERR0R/meterNG)
+# meterNG [![Build Status](https://travis-ci.org/0xERR0R/meterNG.svg?branch=master)](https://travis-ci.org/0xERR0R/meterNG) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/936d4effb3454a69ae2d66348b744f07)](https://www.codacy.com/app/0xERR0R/meterNG?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=0xERR0R/meterNG&amp;utm_campaign=Badge_Grade)
 ![screenshot](screenshot1.png "meterNG")
 
 #### meterNG is a small tool with web UI to record meter readings in a household and track consumptions. This application does not need any cloud for data storage or syncronization. All data will be stored localy. Works fine on Raspberry PI 2 or 3!
