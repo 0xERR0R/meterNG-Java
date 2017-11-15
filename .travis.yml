@@ -1,6 +1,13 @@
 language: java
 jdk:
-  - oraclejdk8
- 
+- oraclejdk8
+deploy:
+  provider: releases
+  api_key:
+    secure: aRAKRDCgpF9lOVHlU2TTlIhTYI6xOeGeDlRtfW/LdXPBcPnXCV9JRgTVtTTrsffJWuIUDzC95b7j8EA9NRdks4+T4LNbR9wRPtYRLAUQ08WNH4O10y5PrgZEmvPZK3UURvWiv1/nLkPVUbGRXnkmKJTCrDVsbwYrKl8deo+UcLmQ/FuMX4FM0Z64vjoZpo4Q0TZjewbbSJw+uItBGXdP+4Wv2dXwRXxgASMgvXg7AV8vDs/2tHr/Tq6slPO8n5UcmB8UCVUUA6aoKI5OYMxC2HuYQKpLeJY8irmqQeabMA5mawkr1FwPqFD7Yb5Hsi7bAAfW1wR3/KFKJZhh33PMP72JEF4uUbA6eSUVPrl45a/6ZCzLHr+IKDSvvay263O/RIHd9sFUFJ5CC+duUn1fJ3D/EKvlpWSm0eTQaXBK4x700RlyjyTCnSwZiU27JooDVPXeT9AIETVp9ynsUrZIVFZouHYeUZdR3TlfS1AK+TBMMfL+RtSZrC7Z5MTzNGKjBkracrX7aLOggI70qP92NqudbbmSY6LW7/caTnNwEBf6bTc2+CNqNsgqaPd24Ft3u3i2QK94XQcXemSArHQJjsLL4ynZQWR9ZcQVpjMFgSxFqmg3S9Xl3F39rGJmTaYrytD+GBK1n13Nmdzc+D6aa92CHXvhE+uvss7E6BziuuI=
+  file: 'build/libs/meterNG.jar'
+  skip_cleanup: true
+  on:
+    tags: true
 before_install:
- - chmod +x gradlew
+- chmod +x gradlew
