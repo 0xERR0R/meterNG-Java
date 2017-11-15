@@ -65,7 +65,7 @@
 <ol class="breadcrumb">
   <li th:each="chartType : ${chartTypes}" th:class="${chartType} == ${activeChart} ? 'active' : ''">
   	<span th:if="${chartType} == ${activeChart}" th:text="#{'chartType.' + ${chartType} + '.label'}"></span>
-  	<a th:unless="${chartType} == ${activeChart}" href="#" th:href="@{/meterReadings/{meterName}/chart/{chartType}(meterName=${meterName},chartType=${chartType})}" th:text="#{'chartType.' + ${chartType} + '.label'}">chartType</a>
+  	<a th:unless="${chartType} == ${activeChart}" href="#" th:href="@{/chart/{meterName}/chart/{chartType}(meterName=${meterName},chartType=${chartType})}" th:text="#{'chartType.' + ${chartType} + '.label'}">chartType</a>
   </li>
 </ol>
 <div id="chart_div" style="width: 100%; height: 400px;"></div>

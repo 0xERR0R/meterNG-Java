@@ -46,14 +46,14 @@ import meterNG.repository.MeterRepository;
 import meterNG.repository.ReadingsRepository;
 import meterNG.util.DateUtil;
 
-@RequestMapping("/meterReadings")
+@RequestMapping("/chart")
 @Controller
 /**
  * MVC controller for showing and calculation of charts
  *
  */
 public class ChartController extends AbstractBaseController {
-	public static final String CONTROLLER_NAME = "meterReadings";
+	public static final String CONTROLLER_NAME = "chart";
 	public static final String CHART = "chart";
 	public static final String DATA = "data";
 
