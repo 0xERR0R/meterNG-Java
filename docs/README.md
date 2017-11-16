@@ -53,6 +53,10 @@ spring.mail.properties.mail.smtp.socketFactory.fallback = false
 * put your application.configuration in the same directory
 * run with Java8: java -jar -Xms32m -Xmx64m meterNG.jar
 
+## Demo
+You can run the application with dev profile. This will create test data.
+* run jar with dev profile: java -jar -Xms32m -Xmx64m -Dspring.profiles.active=dev meterNG.jar
+
 ## Advanced usage
 meterNG uses embedded database (H2) by default. The database file will be stored in the working directory. You can use MySQL for data storage, just add database url und database credentials to the application.properties.
 #### Example configuration with MySQL database (application.properties)
