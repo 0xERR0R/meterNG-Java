@@ -42,7 +42,6 @@ import meterNG.model.Aggregation;
 import meterNG.model.ChartType;
 import meterNG.model.Meter;
 import meterNG.model.Reading;
-import meterNG.repository.MeterRepository;
 import meterNG.repository.ReadingsRepository;
 import meterNG.util.DateUtil;
 
