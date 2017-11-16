@@ -1,5 +1,7 @@
 package meterNG.controller;
 
+import java.util.Optional;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import meterNG.model.Meter;
 import meterNG.repository.MeterRepository;
 
 @RequestMapping("/")
@@ -18,7 +21,13 @@ public class MainController {
 
 	@GetMapping
 	public String list(Model uiModel) {
-		return "redirect:/" + ChartController.CONTROLLER_NAME + "/" + repository.getAllMeters().get(0).getName();
+		Optional<String> meterName = repository.getAllMeters().stream().map(Meter::getName).findFirst();
+		if (meterName.isPresent()) {
+			return "redirect:/" + ChartController.CONTROLLER_NAME + "/" + repository.getAllMeters().get(0).getName();
+		} else {
+			return "main";
+		}
+
 	}
 
 }

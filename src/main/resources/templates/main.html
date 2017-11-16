@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en"
+	th:replace="fragments/htmlHeader :: htmlHeader (title='meterNG - ERROR')">
+</head>
+<body>
+	<div class="alert alert-danger" role="alert" th:text="#{warning.meter.notConfigured.label}"></div>
+</body>
+</html>

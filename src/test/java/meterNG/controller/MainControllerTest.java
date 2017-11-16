@@ -3,7 +3,7 @@ package meterNG.controller;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,14 +31,14 @@ public class MainControllerTest {
 	@MockBean
 	private MeterRepository meterRepository;
 
-	@Before
-	public void setUp() {
+	@Test
+	public void shouldRedirectToMeterChart() throws Exception {
 		given(meterRepository.getAllMeters()).willReturn(Lists.newArrayList(METER));
+		mvc.perform(get("/")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/chart/Electricity"));
 	}
 
 	@Test
-	public void shouldRedirectToMeterchart() throws Exception {
-		mvc.perform(get("/")).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/chart/Electricity"));
+	public void shouldShowMainPageIfNoMeterIsConfigured() throws Exception {
+		mvc.perform(get("/")).andExpect(view().name("main"));
 	}
 }
