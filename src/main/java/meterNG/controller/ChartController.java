@@ -60,18 +60,15 @@ public class ChartController extends AbstractBaseController {
 	@Autowired
 	private MessageSource messageSource;
 
-	private MessageSourceAccessor accessor;
-
-	@PostConstruct
-	private void init() {
-		accessor = new MessageSourceAccessor(messageSource);
-	}
-
 	@Resource
 	private ReadingsRepository readingsRepository;
 
-	@Resource
-	private MeterRepository meterRepository;
+	private MessageSourceAccessor accessor;
+
+	@PostConstruct
+	protected void init() {
+		accessor = new MessageSourceAccessor(messageSource);
+	}
 
 	@GetMapping(value = "/{meterName}/" + CHART + "/{chartType}")
 	public String total(@PathVariable("meterName") String meterName, @PathVariable("chartType") ChartType chartType,
