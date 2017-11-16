@@ -1,0 +1,2 @@
+# meterNG
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/936d4effb3454a69ae2d66348b744f07)](https://www.codacy.com/app/0xERR0R/meterNG?utm_source=github.com&utm_medium=referral&utm_content=0xERR0R/meterNG&utm_campaign=badger)
