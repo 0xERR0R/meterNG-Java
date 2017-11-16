@@ -39,6 +39,6 @@ public class MainControllerTest {
 	@Test
 	public void shouldRedirectToMeterchart() throws Exception {
 		mvc.perform(get("/")).andExpect(status().is3xxRedirection())
-				.andExpect(redirectedUrl("/meterReadings/Electricity"));
+				.andExpect(redirectedUrl("/chart/Electricity"));
 	}
 }

@@ -54,7 +54,7 @@ public class ChartControllerTest {
 
 	@Test
 	public void totalElectricityReturnsCorrectModelAndView() throws Exception {
-		mvc.perform(get("/meterReadings/Electricity/chart/total")) //
+		mvc.perform(get("/chart/Electricity/chart/total")) //
 				.andExpect(status().isOk()) //
 				.andExpect(model().attribute("meterName", "Electricity")) //
 				.andExpect(model().attribute("chartTypes", ChartType.values())) //
@@ -65,7 +65,7 @@ public class ChartControllerTest {
 
 	@Test
 	public void totalElectricityReturnsCorrectTableData() throws Exception {
-		mvc.perform(get("/meterReadings/Electricity/data/total")) //
+		mvc.perform(get("/chart/Electricity/data/total")) //
 				.andExpect(status().isOk()).andExpect(content().contentType("text/javascript; charset=UTF-8"));
 	}
 }
