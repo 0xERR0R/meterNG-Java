@@ -48,4 +48,17 @@ public class AggregatorTest {
 
 		assertThat(result).hasSize(3).contains(new Aggregation(new BigDecimal("192.31"), "01/2016"));
 	}
+
+	@Test
+	public void aggregateYearResult() {
+		List<Reading> input = Lists.newArrayList(
+				ReadingBuilder.builder().date("2016-01-01").value(1200).meterName("Electricity").build(),
+				ReadingBuilder.builder().date("2016-03-10").value(1450).meterName("Electricity").build(),
+				ReadingBuilder.builder().date("2016-06-20").value(1700).meterName("Electricity").build(),
+				ReadingBuilder.builder().date("2016-12-02").value(2400).meterName("Electricity").build());
+
+		Collection<Aggregation> result = Aggregator.aggregateYear(input);
+
+		assertThat(result).hasSize(1).contains(new Aggregation(new BigDecimal("1327.27"), "2016"));
+	}
 }
