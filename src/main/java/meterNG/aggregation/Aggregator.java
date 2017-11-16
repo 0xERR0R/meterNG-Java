@@ -1,6 +1,12 @@
 package meterNG.aggregation;
 
-import static meterNG.util.DateUtil.*;
+import static meterNG.util.DateUtil.addMonth;
+import static meterNG.util.DateUtil.addYear;
+import static meterNG.util.DateUtil.getEndOfMonth;
+import static meterNG.util.DateUtil.getEndOfYear;
+import static meterNG.util.DateUtil.getMonthYearString;
+import static meterNG.util.DateUtil.getStartOfMonth;
+import static meterNG.util.DateUtil.getStartOfYear;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -12,7 +18,6 @@ import java.util.List;
 
 import meterNG.model.Aggregation;
 import meterNG.model.Reading;
-import meterNG.util.DateUtil;
 
 public final class Aggregator {
 	private Aggregator() {
@@ -40,7 +45,7 @@ public final class Aggregator {
 			Aggregation agg = new Aggregation(v2.subtract(v1).setScale(2, RoundingMode.HALF_UP), monthYearString);
 			result.add(agg);
 
-			date = DateUtil.addMonth(startOfMonth);
+			date = addMonth(startOfMonth);
 		} while (date.isBefore(lastDate));
 
 		return result;
@@ -67,7 +72,7 @@ public final class Aggregator {
 			Aggregation agg = new Aggregation(v2.subtract(v1).setScale(2, RoundingMode.HALF_UP), yearString);
 			result.add(agg);
 
-			date = DateUtil.addYear(startOfYear);
+			date = addYear(startOfYear);
 		} while (date.isBefore(lastDate));
 
 		return result;
