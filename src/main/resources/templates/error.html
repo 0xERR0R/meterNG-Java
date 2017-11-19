@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en"
+	th:replace="fragments/htmlHeader :: htmlHeader (title=${status})">
+</head>
+<body>
+	<div class="jumbotron">
+		<div class="container">
+		  <h1  th:text="${error}">Error</h1>
+		  <p th:text="${message}">Message text</p>
+		  <p><a class="btn btn-default" th:href="@{/}" href="#" role="button">
+					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+					<span  th:text="#{homeButton.label}">Home</span>
+				</a></p>
+		</div>
+	</div>
+</body>
+</html>
