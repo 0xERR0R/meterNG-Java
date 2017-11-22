@@ -26,7 +26,7 @@ Chart view                                                 |  New record view
 | notificationMail.recipient | email recipient | - |
 | notificationMail.url | Url, which will be displayed in the notification mail | - |
 | notificationMail.cron | Cron syntax for the notification job | 0 0 7 \* \* \* |
-| notificationMail.meterNamesForNotification | if set, only defined meters will be user to determine the last reading date | - |
+| notificationMail.meterNamesForNotification | if set, only defined meters will be used to determine the last reading date | - |
 | backupMail.enabled | Enables mail with backup | false |
 | backupMail.cron | Cron syntax for the backup job |0 0 0 1 \* \* |
 
