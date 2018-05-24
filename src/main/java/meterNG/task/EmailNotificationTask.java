@@ -101,7 +101,7 @@ public class EmailNotificationTask {
 
 		final MimeMessage mimeMessage = mailSender.createMimeMessage();
 		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
-		message.setSubject("[meterNG]Reminder: Please record new meter readings");
+		message.setSubject("[meterNG] Reminder: Please record new meter readings");
 		message.setFrom("noreply@example.com");
 		message.setTo(recipient);
 

@@ -67,7 +67,7 @@ public class EmailBackupTask {
 
 		final MimeMessage mimeMessage = mailSender.createMimeMessage();
 		final MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-		message.setSubject("[meterNG]New backup");
+		message.setSubject("[meterNG] New backup");
 		message.setFrom("noreply@example.com");
 		message.setTo(recipient);
 
