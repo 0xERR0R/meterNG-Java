@@ -81,4 +81,11 @@ public class Reading implements Comparable<Reading> {
 		return getDate().compareTo(o.getDate());
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Reading [meterName=%s, value=%s, date=%s]", meterName, value, date);
+	}
+	
+	
+
 }
