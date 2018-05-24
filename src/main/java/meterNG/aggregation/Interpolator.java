@@ -18,7 +18,7 @@ public class Interpolator {
 	private final double[] x, y;
 	private final double minX, maxX;
 
-	public Interpolator(List<Reading> readings) {
+	Interpolator(List<Reading> readings) {
 		if (readings.size() < 2) {
 			throw new IllegalArgumentException("interpolation calculation needs at least two values");
 		}
