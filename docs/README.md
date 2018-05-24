@@ -29,6 +29,8 @@ Chart view                                                 |  New record view
 | notificationMail.meterNamesForNotification | if set, only defined meters will be used to determine the last reading date | - |
 | backupMail.enabled | Enables mail with backup | false |
 | backupMail.cron | Cron syntax for the backup job |0 0 0 1 \* \* |
+| statisticMail.enabled| Enables statistic mail with month consumption comparison |false |
+| statisticMail.cron | Cron syntax for the statistic job |0 0 0 1 \* \* |
 
 #### Email configuration
 To send mails, meterNG needs a SMTP server with valid account. For configuration see the example below. For advanced config see [Spring Boot Mail Properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)

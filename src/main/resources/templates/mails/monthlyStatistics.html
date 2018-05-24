@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<table style="border-collapse: collapse; width: 100%">
+		<thead>
+			<tr>
+				<th style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;">Meter</th>
+				<th style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;">Period 1</th>
+				<th style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;">Consumption 1</th>
+				<th style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;">Period 2</th>
+				<th style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;">Consumption 2</th>
+				<th style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;">Diff</th>
+			</tr> 
+		</thead> 
+		<tbody>
+			<tr th:each="e : ${entries}">
+				<td style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;" th:text="${e.meter.name}">Electricity</td>
+				<td style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;" th:text="${e.period1}">04/2018</td>
+				<td style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;"><span th:text="${e.consumption1}">4711</span> <span th:text="${e.meter.unit}">KWh</span></td>
+				<td style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;" th:text="${e.period2}">03/2018</td>
+				<td style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;"><span th:text="${e.consumption2}">4911</span> <span th:text="${e.meter.unit}">KWh</span></td>
+				<td style="border: 1px dashed #999;	padding: 0.5rem; text-align: left;" th:styleappend="${e.diff} >= 0? 'color: red' : 'color: green'" th:text="${e.diff} + ' ' + ${e.meter.unit} + ' (' + ${e.diffPercent} + '%)'">+142</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
