@@ -36,7 +36,7 @@
 							<li th:each="meter : ${meters}"
 								th:class="${meter.name} == ${meterName} ? 'active' : ''"><a
 								href="#"
-								th:href="@{/meterReadings/{meter}/(meter=${meter.name})}"
+								th:href="@{/chart/{meter}/(meter=${meter.name})}"
 								th:text="${meter.name}">Meter1</a></li>
 						</ul></li>
 					<li><a th:href="@{/record}" href="#"><span
