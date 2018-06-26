@@ -1,5 +1,7 @@
 package meterNG.controller;
 
+import static meterNG.model.ReadingBuilder.readingBuilder;
+import static meterNG.model.ReadingType.OFFSET;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.extractor.Extractors.byName;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.FileInputStream;
+import java.util.stream.StreamSupport;
 
 import javax.annotation.Resource;
 
@@ -31,7 +34,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlRadioButtonInput;
 
 import meterNG.model.Reading;
-import meterNG.model.ReadingBuilder;
 import meterNG.repository.ReadingsRepository;
 
 @RunWith(SpringRunner.class)
@@ -51,16 +53,15 @@ public class AdminControllerTest {
 	public void setup() {
 		webClient = MockMvcWebClientBuilder.mockMvcSetup(mvc).build();
 		// Test data
-		readingsRepository
-				.save(ReadingBuilder.builder().date("2015-01-01").meterName("Electricity").value("4711.24").build());
-		readingsRepository.save(ReadingBuilder.builder().date("2015-01-01").meterName("Gas").value("4712").build());
+		readingsRepository.save(readingBuilder().date("2015-01-01").meterName("Electricity").value("4711.24").build());
+		readingsRepository.save(readingBuilder().date("2015-01-01").meterName("Gas").value("4712").build());
 	}
 
 	@Test
 	public void performCsvExport() throws Exception {
 
 		mvc.perform(post("/admin/export")).andExpect(status().isOk()).andExpect(content().contentType("text/plain"))
-				.andExpect(content().string("Electricity;2015-01-01;4711.24\nGas;2015-01-01;4712\n"));
+				.andExpect(content().string("Electricity;2015-01-01;4711.24;MEASURE\nGas;2015-01-01;4712;MEASURE\n"));
 	}
 
 	@Test
@@ -89,6 +90,8 @@ public class AdminControllerTest {
 				.andExpect(status().is(200));
 
 		assertThat(readingsRepository.findAll()).hasSize(4);
+		assertThat(StreamSupport.stream(readingsRepository.findAll().spliterator(), false)
+				.filter(r -> r.getType().equals(OFFSET)).count()).isEqualTo(1);
 	}
 
 	@Test

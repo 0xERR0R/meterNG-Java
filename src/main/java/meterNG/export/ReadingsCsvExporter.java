@@ -19,6 +19,7 @@ import com.google.common.base.Joiner;
 import meterNG.controller.AdminController.ImportOption;
 import meterNG.model.Reading;
 import meterNG.model.ReadingBuilder;
+import meterNG.model.ReadingType;
 import meterNG.repository.ReadingsRepository;
 
 /**
@@ -33,7 +34,7 @@ public class ReadingsCsvExporter {
 
 	public void writeAsCsv(Writer writer) throws IOException {
 		for (Reading r : readingsRepository.findAllByOrderByMeterNameAscDateAsc()) {
-			writer.write(Joiner.on(";").join(r.getMeterName(), r.getDate().toLocalDate(), r.getValue()));
+			writer.write(Joiner.on(";").join(r.getMeterName(), r.getDate().toLocalDate(), r.getValue(), r.getType()));
 			writer.append("\n");
 		}
 	}
@@ -53,8 +54,8 @@ public class ReadingsCsvExporter {
 			while ((line = br.readLine()) != null) {
 				if (!line.startsWith("#")) {
 					String[] tokens = line.split(";");
-					Reading reading = ReadingBuilder.builder().meterName(tokens[0]).date(parseDate(tokens[1]))
-							.value(tokens[2]).build();
+					Reading reading = ReadingBuilder.readingBuilder().meterName(tokens[0]).date(parseDate(tokens[1]))
+							.value(tokens[2]).type(ReadingType.valueOf(tokens[3])).build();
 					parsedItems.add(reading);
 				}
 			}

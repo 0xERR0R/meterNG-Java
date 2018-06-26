@@ -30,7 +30,7 @@ public class ReadingsRepositoryTest {
 
 	@Test
 	public void findByMeterNameShouldReturnOneReading() {
-		Reading r = ReadingBuilder.builder().meterName("Electricity").date("2015-06-06").value(4711).build();
+		Reading r = ReadingBuilder.readingBuilder().meterName("Electricity").date("2015-06-06").value(4711).build();
 		this.entityManager.persist(r);
 		List<Reading> result = this.repository.findByMeterName("Electricity");
 
@@ -39,18 +39,18 @@ public class ReadingsRepositoryTest {
 
 	@Test
 	public void findAllReadingsLastDate() {
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("a").date("2015-03-03").value(4711).build());
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("a").date("2015-04-04").value(4711).build());
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("a").date("2015-01-01").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("a").date("2015-03-03").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("a").date("2015-04-04").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("a").date("2015-01-01").value(4711).build());
 		assertThat(repository.findAllReadingsLastDate()).isEqualTo(LocalDate.parse("2015-04-04"));
 	}
 
 	@Test
 	public void findReadingsByListLastDate() {
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("a").date("2015-03-03").value(4711).build());
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("a").date("2015-04-04").value(4711).build());
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("a").date("2015-01-01").value(4711).build());
-		entityManager.persistFlushFind(ReadingBuilder.builder().meterName("b").date("2015-01-01").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("a").date("2015-03-03").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("a").date("2015-04-04").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("a").date("2015-01-01").value(4711).build());
+		entityManager.persistFlushFind(ReadingBuilder.readingBuilder().meterName("b").date("2015-01-01").value(4711).build());
 		assertThat(repository.findReadingsLastDateByMeterNames(Collections.singletonList("a")))
 				.isEqualTo(LocalDate.parse("2015-04-04"));
 		assertThat(repository.findReadingsLastDateByMeterNames(Collections.singletonList("b")))

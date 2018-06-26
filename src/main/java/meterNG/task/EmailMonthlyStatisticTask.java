@@ -42,6 +42,9 @@ public class EmailMonthlyStatisticTask {
 
 	@Autowired
 	private ReadingsRepository readingsRepository;
+	
+	@Autowired
+	private Aggregator aggregator;
 
 	@Autowired
 	private MeterRepository meterRepository;
@@ -64,7 +67,7 @@ public class EmailMonthlyStatisticTask {
 			String secontLastMonth = DateUtil.getMonthYearString(lastMonthDate.minusMonths(1));
 			String sameMonthInLastYear = DateUtil.getMonthYearString(lastMonthDate.minusYears(1));
 
-			Collection<Aggregation> agg = Aggregator.aggregateMonth(readingsRepository.findByMeterName(m.getName()));
+			Collection<Aggregation> agg = aggregator.aggregateMonth(readingsRepository.findByMeterName(m.getName()));
 			Optional<Aggregation> lastMonthAggregation = agg.stream()
 					.filter(a -> a.getAggregationName().equals(lastMonth)).findFirst();
 			Optional<Aggregation> secondLastMonthAggregation = agg.stream()

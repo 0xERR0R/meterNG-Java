@@ -64,7 +64,7 @@ public class NewReadingController {
 			if (meter.isPresent()) {
 				String valueAsString = (String) formData.get(meterName);
 				if (valueAsString != null && valueAsString.length() > 0) {
-					Reading reading = ReadingBuilder.builder().date(readingTime).meterName(meterName)
+					Reading reading = ReadingBuilder.readingBuilder().date(readingTime).meterName(meterName)
 							.value(valueAsString).build();
 					readingRepository.save(reading);
 				}

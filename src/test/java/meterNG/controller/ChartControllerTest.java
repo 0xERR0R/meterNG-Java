@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.google.common.collect.Lists;
 
+import meterNG.aggregation.Aggregator;
 import meterNG.model.ChartType;
 import meterNG.model.Meter;
 import meterNG.model.ReadingBuilder;
@@ -34,6 +35,9 @@ public class ChartControllerTest {
 
 	@MockBean
 	private MeterRepository meterRepository;
+	
+	@MockBean
+	private Aggregator aggregator;
 
 	private static final Meter METER_GAS = new Meter("Gas", "m³");
 
@@ -46,7 +50,7 @@ public class ChartControllerTest {
 	public void setup() {
 		given(readingsRepository.findByMeterName("Electricity")) //
 				.willReturn(Lists.newArrayList( //
-						ReadingBuilder.builder().date("2015-01-01").value(4711).meterName("Electricity").build()));
+						ReadingBuilder.readingBuilder().date("2015-01-01").value(4711).meterName("Electricity").build()));
 		given(meterRepository.getAllMeters()).willReturn(Lists.newArrayList(METER_ELECTRICITY, METER_GAS));
 		given(meterRepository.findMeterByName("Gas")).willReturn(Optional.of(METER_GAS));
 		given(meterRepository.findMeterByName("Electricity")).willReturn(Optional.of(METER_ELECTRICITY));

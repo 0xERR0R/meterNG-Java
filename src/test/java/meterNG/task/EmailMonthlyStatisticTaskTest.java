@@ -1,7 +1,7 @@
 package meterNG.task;
 
 import static java.time.LocalDateTime.now;
-import static meterNG.model.ReadingBuilder.builder;
+import static meterNG.model.ReadingBuilder.readingBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -44,24 +44,26 @@ public class EmailMonthlyStatisticTaskTest {
 	@Test
 	public void mailSend() throws MessagingException {
 		given(readingsRepository.findByMeterName("Electricity")).willReturn(Lists.newArrayList( //
-				builder().meterName("Electricity").date(now().minusDays(400)).value("20").build(), //
-				builder().meterName("Electricity").date(now().minusDays(350)).value("45").build(), //
-				builder().meterName("Electricity").date(now().minusDays(300)).value("90").build(), //
-				builder().meterName("Electricity").date(now().minusDays(250)).value("110").build(), //
-				builder().meterName("Electricity").date(now().minusDays(200)).value("138").build(), //
-				builder().meterName("Electricity").date(now().minusDays(150)).value("170").build(), //
-				builder().meterName("Electricity").date(now().minusDays(100)).value("222").build(), //
-				builder().meterName("Electricity").date(now().minusDays(50)).value("280").build() //
+				readingBuilder().meterName("Electricity").date(now().minusDays(400)).value("20").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(350)).value("45").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(300)).value("90").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(250)).value("110").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(200)).value("138").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(150)).value("170").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(100)).value("222").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(50)).value("280").build(), //
+				readingBuilder().meterName("Electricity").date(now().minusDays(20)).value("180").build() //
 		));
 		given(readingsRepository.findByMeterName("Water")).willReturn(Lists.newArrayList( //
-				builder().meterName("Water").date(now().minusDays(400)).value("2777").build(), //
-				builder().meterName("Water").date(now().minusDays(350)).value("3000").build(), //
-				builder().meterName("Water").date(now().minusDays(300)).value("3300").build(), //
-				builder().meterName("Water").date(now().minusDays(250)).value("3800").build(), //
-				builder().meterName("Water").date(now().minusDays(200)).value("4205").build(), //
-				builder().meterName("Water").date(now().minusDays(150)).value("4466").build(), //
-				builder().meterName("Water").date(now().minusDays(100)).value("5000").build(), //
-				builder().meterName("Water").date(now().minusDays(50)).value("5333").build() //
+				readingBuilder().meterName("Water").date(now().minusDays(400)).value("2777").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(350)).value("3000").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(300)).value("3300").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(250)).value("3800").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(200)).value("4205").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(150)).value("4466").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(100)).value("5000").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(50)).value("5333").build(), //
+				readingBuilder().meterName("Water").date(now().minusDays(20)).value("5133").build() //
 		));
 		task.runTask();
 		assertThat(greenMail.getReceivedMessages()).hasSize(1);

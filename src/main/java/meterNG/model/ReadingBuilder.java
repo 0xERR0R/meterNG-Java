@@ -22,6 +22,11 @@ public final class ReadingBuilder {
 		r.setMeterName(meterName);
 		return this;
 	}
+	
+	public ReadingBuilder type(ReadingType type) {
+		r.setType(type);
+		return this;
+	}
 
 	public ReadingBuilder value(long value) {
 		r.setValue(BigDecimal.valueOf(value));
@@ -37,7 +42,7 @@ public final class ReadingBuilder {
 		return r;
 	}
 
-	public static ReadingBuilder builder() {
+	public static ReadingBuilder readingBuilder() {
 		return new ReadingBuilder();
 	}
 }

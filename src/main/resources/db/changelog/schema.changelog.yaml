@@ -28,3 +28,15 @@ databaseChangeLog:
                   type: decimal(19,2)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 02-addedOffset
+      author: dh
+      changes:
+        - addColumn:
+            tableName: reading
+            columns:
+              - column:
+                  name: type
+                  type: varchar(20)
+                  defaultValue: MEASURE
+      

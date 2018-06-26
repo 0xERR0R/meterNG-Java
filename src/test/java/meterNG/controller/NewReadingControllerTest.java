@@ -93,8 +93,8 @@ public class NewReadingControllerTest {
 		HtmlButton submit = form.getOneHtmlElementByAttribute("button", "type", "submit");
 		submit.click();
 
-		Reading expected1 = ReadingBuilder.builder().date("2016-01-01").meterName("Gas").value("1234.56").build();
-		Reading expected2 = ReadingBuilder.builder().date("2016-01-01").meterName("Electricity").value("4711").build();
+		Reading expected1 = ReadingBuilder.readingBuilder().date("2016-01-01").meterName("Gas").value("1234.56").build();
+		Reading expected2 = ReadingBuilder.readingBuilder().date("2016-01-01").meterName("Electricity").value("4711").build();
 
 		Mockito.verify(readingsRepository).save(expected1);
 		Mockito.verify(readingsRepository).save(expected2);

@@ -1,10 +1,13 @@
 package meterNG.aggregation;
 
+import static meterNG.model.ReadingType.MEASURE;
+import static meterNG.model.ReadingType.OFFSET;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import meterNG.model.Reading;
 import meterNG.util.DateUtil;
@@ -22,19 +25,38 @@ public class Interpolator {
 		if (readings.size() < 2) {
 			throw new IllegalArgumentException("interpolation calculation needs at least two values");
 		}
-		List<Reading> copy = new LinkedList<>(readings);
-		Collections.sort(copy);
-		x = new double[copy.size()];
-		y = new double[copy.size()];
+		List<Reading> measureReadings = readings.stream() //
+				.filter(r -> r.getType().equals(MEASURE)) //
+				.sorted() //
+				.collect(Collectors.toList());
 
-		for (int i = 0; i < copy.size(); i++) {
-			Reading m = copy.get(i);
-			x[i] = dateToValue(m.getDate());
-			y[i] = m.getValue().doubleValue();
+		List<Reading> offsets = readings.stream() //
+				.filter(r -> r.getType().equals(OFFSET)) //
+				.collect(Collectors.toList());
+
+		x = new double[measureReadings.size()];
+		y = new double[measureReadings.size()];
+
+		for (int i = 0; i < measureReadings.size(); i++) {
+			Reading m = measureReadings.get(i);
+			LocalDateTime readingDate = m.getDate();
+			BigDecimal value = m.getValue();
+			Optional<Reading> prev = (i - 1 >= 0) ? Optional.of(measureReadings.get(i - 1)) : Optional.empty();
+			boolean valueSmallerThanPreviousReadingValue = prev.map(Reading::getValue).orElse(BigDecimal.ZERO)
+					.compareTo(value) > 0;
+
+			Optional<BigDecimal> totalOffset = offsets.stream() //
+					.filter(offset -> offset.getDate().isBefore(readingDate) // offset is before
+							|| (offset.getDate().equals(readingDate) && valueSmallerThanPreviousReadingValue) //
+					) //
+					.map(Reading::getValue) //
+					.reduce((a, b) -> a.add(b));
+			x[i] = dateToValue(readingDate);
+			y[i] = m.getValue().add(totalOffset.orElse(BigDecimal.ZERO)).doubleValue();
 		}
 
 		minX = x[0];
-		maxX = x[copy.size() - 1];
+		maxX = x[measureReadings.size() - 1];
 	}
 
 	private long dateToValue(LocalDateTime date) {

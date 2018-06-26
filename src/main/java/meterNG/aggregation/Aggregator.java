@@ -16,14 +16,16 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import meterNG.model.Aggregation;
 import meterNG.model.Reading;
 
-public final class Aggregator {
-	private Aggregator() {
-	}
+@Service
+public class Aggregator {
 
-	public static Collection<Aggregation> aggregateMonth(List<Reading> readings) {
+	public Collection<Aggregation> aggregateMonth(List<Reading> readings) {
+		checkInput(readings);
 		List<Aggregation> result = new LinkedList<>();
 
 		if (readings.size() < 2) {
@@ -51,8 +53,9 @@ public final class Aggregator {
 		return result;
 	}
 
-	public static Collection<Aggregation> aggregateYear(List<Reading> readings) {
+	public Collection<Aggregation> aggregateYear(List<Reading> readings) {
 		List<Aggregation> result = new LinkedList<>();
+		checkInput(readings);
 
 		if (readings.size() < 2) {
 			return result;
@@ -77,4 +80,14 @@ public final class Aggregator {
 
 		return result;
 	}
+
+	private static void checkInput(List<Reading> readings) {
+		if (readings.size() > 0) {
+			if (readings.stream().map(Reading::getMeterName).distinct().count() > 1) {
+				throw new IllegalArgumentException("only readings of one meter cat be aggregated");
+			}
+		}
+
+	}
+
 }

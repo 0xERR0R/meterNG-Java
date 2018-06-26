@@ -61,6 +61,9 @@ public class ChartController extends AbstractBaseController {
 
 	@Resource
 	private ReadingsRepository readingsRepository;
+	
+	@Resource
+	private Aggregator aggregator = new Aggregator();
 
 	private MessageSourceAccessor accessor;
 
@@ -150,7 +153,7 @@ public class ChartController extends AbstractBaseController {
 	}
 
 	private void populateMonthAllTable(DataTable dataTable, List<Reading> readingsForMeter) {
-		Collection<Aggregation> aggregationMonth = Aggregator.aggregateMonth(readingsForMeter);
+		Collection<Aggregation> aggregationMonth = aggregator.aggregateMonth(readingsForMeter);
 		ArrayList<ColumnDescription> cd = new ArrayList<ColumnDescription>();
 		cd.add(new ColumnDescription("month", ValueType.TEXT, accessor.getMessage("month.label")));
 		cd.add(new ColumnDescription("value", ValueType.NUMBER, accessor.getMessage("consumption.label")));
@@ -170,7 +173,7 @@ public class ChartController extends AbstractBaseController {
 	}
 
 	private void pupulateYearTable(DataTable dataTable, List<Reading> readingsForMeter) {
-		Collection<Aggregation> aggregationMonth = Aggregator.aggregateYear(readingsForMeter);
+		Collection<Aggregation> aggregationMonth = aggregator.aggregateYear(readingsForMeter);
 		ArrayList<ColumnDescription> cd = new ArrayList<ColumnDescription>();
 		cd.add(new ColumnDescription("year", ValueType.TEXT, accessor.getMessage("year.label")));
 		cd.add(new ColumnDescription("value", ValueType.NUMBER, accessor.getMessage("consumption.label")));
@@ -190,7 +193,7 @@ public class ChartController extends AbstractBaseController {
 	}
 
 	private void populateMonthTable(DataTable dataTable, List<Reading> readingsForMeter) {
-		Collection<Aggregation> aggregationMonth = Aggregator.aggregateMonth(readingsForMeter);
+		Collection<Aggregation> aggregationMonth = aggregator.aggregateMonth(readingsForMeter);
 
 		// Ermittlung min Jahr / max Jahr
 		int minYear = 9999, maxYear = 0;
