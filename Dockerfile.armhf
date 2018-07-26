@@ -1,0 +1,8 @@
+FROM arm32v7/openjdk:8-jre
+
+WORKDIR /appdata
+VOLUME /appdata
+
+COPY build/libs/meterNG.jar /opt/meterNG.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Xms32m", "-Xmx64m", "-jar","/opt/meterNG.jar"]
+
