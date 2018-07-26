@@ -7,11 +7,11 @@ before_script:
 script:
 - ./gradlew build
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-- docker build -t meterng:armhf -f Dockerfile.armhf .
+- docker build -t meterng-armhf -f Dockerfile.armhf .
 after_success:
 - docker login -u="$DOCKER_USER" -p="$DOCKER_PASSWORD" 
-- docker tag meterng:armhf meterng:latest $DOCKER_USER/meterng:armhf $DOCKER_USER/meterng:latest
-- docker push $DOCKER_USER/meterng
+- docker tag meterng-armhf:latest $DOCKER_USER/meterng-armhf:latest
+- docker push $DOCKER_USER/meterng-armhf
 
 env:
   global:
